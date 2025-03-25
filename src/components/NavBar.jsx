@@ -27,6 +27,10 @@ const NavBar = () => {
     navigate("/dashboard");
   };
 
+  const handleLogout = () => {
+    navigate("/");
+  };
+
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm p-8 text-xl">
@@ -62,13 +66,14 @@ const NavBar = () => {
           className="btn btn-ghost text-3xl">Robcom</a>
         </div>
         <div className="navbar-end">
+        <p className="mr-2 text-sm">Russelle Roxas</p>
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
               className="btn btn-ghost btn-circle avatar"
               onClick={(e) => e.currentTarget.classList.toggle('bg-gray-200')}>
-              <div className="w-16 rounded-full">
+              <div className="rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
                   src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -87,7 +92,9 @@ const NavBar = () => {
               <li><a
               onClick={handleGotoSettings}
               >Settings</a></li>
-              <li><a>Logout</a></li>
+              <li><a
+              onClick={handleLogout}
+              >Logout</a></li>
             </ul>
           </div>
         </div>

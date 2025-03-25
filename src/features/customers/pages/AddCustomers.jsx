@@ -1,9 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 
 const AddCustomers = () => {
+    const navigate = useNavigate();
+    const handleSubmit = () => {
+        navigate('/customers');
+    }
 return (
     <div>
-        <div className="flex flex-col items-center justify-center h-full">
+        <div className="flex flex-col items-center justify-center h-full mt-10">
             <fieldset className="fieldset w-full max-w-4xl bg-base-200 border border-base-300 p-4 rounded-box">
                 <legend className="fieldset-legend">Customer Information</legend>
                 <h2 className="text-lg font-bold mb-2">Basic Information</h2>
@@ -94,7 +99,9 @@ return (
                     </div>
                 </div>
 
-                <input type="submit" value="Submit" className="btn w-24 mt-7" />
+                <input
+                onClick={handleSubmit}
+                type="submit" value="Submit" className="btn w-24 mt-7" />
             </fieldset>
         </div>
     </div>
