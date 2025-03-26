@@ -12,7 +12,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-6 min-h-screen grid grid-rows-3 gap-6">
+    <div className="p-6 grid grid-rows-3 gap-6">
       <div className="bg shadow-md rounded-lg p-6 row-span-1">
         <h1 className="text-2xl font-bold mb-4 text-gray-800">Dashboard Overview</h1>
         <p>Welcome to the dashboard! Here you can view customer and billing information.</p>

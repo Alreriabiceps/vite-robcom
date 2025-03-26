@@ -11,8 +11,8 @@ const NavBar = () => {
     navigate("/settings");
   };
 
-  const handleGotoBilling = () => {
-    navigate("/billing");
+  const handleGotoCustomersBilling = () => {
+    navigate("/customersbilling");
   };
 
   const handleGotoCustomers = () => {
@@ -49,7 +49,7 @@ const NavBar = () => {
               tabIndex={0}
               className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-4 w-64 p-4 shadow">
               <li><a
-              onClick={handleGotoBilling}
+              onClick={handleGotoCustomersBilling}
               >Billing</a></li>
               <li><a
               onClick={handleGotoCustomers}

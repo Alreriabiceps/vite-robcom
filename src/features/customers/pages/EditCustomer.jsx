@@ -1,55 +1,53 @@
-import React from "react";
-import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useState } from 'react'
+import { useNavigate } from 'react-router';
 
-const AddCustomers = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    joNumber: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    mobile: "",
-    email: "",
-    barangay: "",
-    town: "",
-    province: "",
-    landmark: "",
-    plan: "",
-    dateInstalled: "",
-    dueDate: "",
-    installer: "",
-    napLocation: "",
-    power: "",
-    focLength: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`${apiUrl}/customers`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        navigate("/customers");
-      } else {
-        console.error("Failed to add customer");
+const EditCustomer = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+      joNumber: "",
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      mobile: "",
+      email: "",
+      barangay: "",
+      town: "",
+      province: "",
+      landmark: "",
+      plan: "",
+      dateInstalled: "",
+      dueDate: "",
+      installer: "",
+      napLocation: "",
+      power: "",
+      focLength: "",
+    });
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await fetch(`${apiUrl}/customers`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        if (response.ok) {
+          navigate("/customers");
+        } else {
+          console.error("Failed to add customer");
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
+    };
   return (
     <>
-      <div>
+    <div>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col items-center justify-center h-full mt-10">
             <fieldset className="fieldset w-full max-w-4xl bg-base-200 border border-base-300 p-4 rounded-box">
@@ -345,8 +343,8 @@ const AddCustomers = () => {
           </div>
         </form>
       </div>
-    </>
-  );
-};
+      </>
+  )
+}
 
-export default AddCustomers;
+export default EditCustomer
