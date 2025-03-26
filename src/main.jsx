@@ -28,7 +28,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/customers" element={<Customers />} />
         <Route path="/addcustomers" element={<AddCustomers />} />
         <Route path="/customersbilling" element={<CustomersBilling />} />
-        <Route path="/editcustomer" element={<EditCustomer />} />
+        <Route path="/editcustomer/:id" element={<EditCustomer />} />
         </Route>
       </Routes>
     </BrowserRouter>

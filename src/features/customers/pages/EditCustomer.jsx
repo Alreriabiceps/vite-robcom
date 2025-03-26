@@ -1,53 +1,89 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router';
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router";
 
 const EditCustomer = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-      joNumber: "",
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      mobile: "",
-      email: "",
-      barangay: "",
-      town: "",
-      province: "",
-      landmark: "",
-      plan: "",
-      dateInstalled: "",
-      dueDate: "",
-      installer: "",
-      napLocation: "",
-      power: "",
-      focLength: "",
-    });
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
-    };
-    const apiUrl = import.meta.env.VITE_API_BASE_URL;
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const [formData, setFormData] = useState({
+    joNumber: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    mobile: "",
+    email: "",
+    barangay: "",
+    town: "",
+    province: "",
+    landmark: "",
+    plan: "",
+    dateInstalled: "",
+    dueDate: "",
+    installer: "",
+    napLocation: "",
+    power: "",
+    focLength: "",
+  });
+
+  useEffect(() => {
+    if (!id) return; // Ensure ID is not undefined
+
+    const fetchCustomer = async () => {
       try {
-        const response = await fetch(`${apiUrl}/customers`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
-        if (response.ok) {
-          navigate("/customers");
-        } else {
-          console.error("Failed to add customer");
+        const response = await fetch(`${apiUrl}/customers/${id}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        const data = await response.json();
+        setFormData((prev) => ({
+          ...prev,
+          ...data, // Merge fetched data into formData
+        }));
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error fetching customer:", error);
       }
     };
+
+    fetchCustomer();
+  }, [id, apiUrl]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/customers/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData), // Ensure formData contains updated values
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        alert("Customer updated successfully!");
+        navigate("/customers");
+      } else {
+        alert(`Error: ${result.message}`);
+      }
+    } catch (error) {
+      console.error("Failed to update customer:", error);
+      alert("Server error, try again later.");
+    }
+  };
+
   return (
     <>
-    <div>
+      <div>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col items-center justify-center h-full mt-10">
             <fieldset className="fieldset w-full max-w-4xl bg-base-200 border border-base-300 p-4 rounded-box">
@@ -181,10 +217,10 @@ const EditCustomer = () => {
                   <select
                     className="select w-full"
                     name="plan"
-                    value={formData.plan}
+                    value={formData.plan || ""}
                     onChange={handleChange}
                   >
-                    <option hidden dissabled selected>
+                    <option value="" disabled hidden>
                       Select Plan
                     </option>
                     <option value="Basic">Basic</option>
@@ -208,10 +244,10 @@ const EditCustomer = () => {
                   <select
                     className="select w-full"
                     name="dueDate"
-                    value={formData.dueDate}
+                    value={formData.dueDate || ""}
                     onChange={handleChange}
                   >
-                    <option hidden dissabled selected>
+                    <option value="" hidden disabled>
                       Select Due Date
                     </option>
                     <option value="15">15th</option>
@@ -264,15 +300,15 @@ const EditCustomer = () => {
                 </div>
               </div>
 
-              <button type="submit" className="btn w-24 mt-7">
-                Submit
+              <button type="submit" className="btn btn-outline btn-success w-24 mt-7">
+                Update
               </button>
             </fieldset>
           </div>
         </form>
       </div>
 
-      <div>
+      {/* <div>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col items-center justify-center h-full mt-10">
             <fieldset className="fieldset w-full max-w-4xl bg-base-200 border border-base-300 p-4 rounded-box">
@@ -342,9 +378,9 @@ const EditCustomer = () => {
             </fieldset>
           </div>
         </form>
-      </div>
-      </>
-  )
-}
+      </div> */}
+    </>
+  );
+};
 
-export default EditCustomer
+export default EditCustomer;
