@@ -84,6 +84,7 @@ const EditCustomer = () => {
   return (
     <>
       <div>
+        {/* <div>already sent a message for 15{smsreminderduedate}</div> */}
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col items-center justify-center h-full mt-10">
             <fieldset className="fieldset w-full max-w-4xl bg-base-200 border border-base-300 p-4 rounded-box">
